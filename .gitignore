@@ -1,0 +1,7 @@
+/.vs
+/out
+/target_debug
+/target_release
+/install
+/build
+/.vscode
