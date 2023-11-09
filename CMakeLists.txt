@@ -2,6 +2,18 @@ cmake_minimum_required (VERSION 3.12)
 
 project ("OSG_PROJECT")
 
+find_package(OpenSceneGraph QUIET)
+
+if(OpenSceneGraph_FOUND)
+    message("------------ osg found ------------")
+    message("------------ ${OSG_LIBRARY}")
+    message("------------ ${OSG_LIBRARIES}")
+    message("------------ ${OSG_INCLUDE_DIR}")
+    message("------------ ${OPENSCENEGRAPH_LIBRARIES}")
+else()
+    message(FATAL_ERROR "------------ osg not found ------------")
+endif()
+
 if(MSVC)
     # 解决MSVC C4819警告
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /Zc:__cplusplus /utf-8 /EHsc")
