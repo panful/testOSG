@@ -2,6 +2,10 @@
 OpenSceneGraph_DIR = xxx/OpenSceneGraph/cmake
 path 添加 xxx/OpenSceneGraph/bin
 
+## GL3
+[osg下GL3环境搭建](https://zhuanlan.zhihu.com/p/539708040)
+编译完成后，将下载的GL和KHR文件夹拷贝到xxx/OpenSceneGraph/include，第三方库bin目录下所有文件拷贝到 xxx/OpenSceneGraph/bin
+
 ## Osg源码分析
 osg::Geode和osg::Geometry区别是：osg::Geode继承自osg::Group，可以包含多个子节点；osg::Geometry和osg::Group都继承自osg::Node，但是osg::Geometry不可以包含子节点，只是一个独立节点。
 osg::StateSet：此类封装了OpenGL状态参数，实现对OpenGL参数的集中管理，封装成类，更方便使用。

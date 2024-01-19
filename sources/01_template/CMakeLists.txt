@@ -1,4 +1,4 @@
-set(target_name "demo")
+set(target_name "01_template")
 
 find_package(OpenSceneGraph COMPONENTS osg osgViewer OpenThreads osgAnimation osgGA osgDB REQUIRED QUIET)
 add_executable(${target_name} "main.cpp")

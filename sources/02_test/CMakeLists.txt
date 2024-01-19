@@ -1,4 +1,4 @@
-set(target_name "02_demo")
+set(target_name "02_test")
 
 find_package(OpenSceneGraph
     COMPONENTS 

@@ -3,7 +3,7 @@
  * 2. 简单光照
  */
 
-#define TEST2
+#define TEST1
 
 #ifdef TEST1
 
