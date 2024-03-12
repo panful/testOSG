@@ -37,21 +37,40 @@ osg::Operation
 osg::OperationThread
 多线程渲染的原理是使用后台线程绘制，然后主线程在帧刷新时同步绘制。
 ## Osg源码分析 最长的一帧
-场景树      SceneGraph
-场景子树    Subgraph
-节点        Node
-摄像机      Camera
-渲染器      Renderer
-窗口        Window
-视口        Viewport
-场景        Scene
-视图        View
-单视景器    Viewer
-多视景器    CompositeViewer
-漫游器      Manipulator
-访问器      Visitor
-回调        Callback
-事件        Event
-更新        Update
-筛选        Cull
-绘制        Draw
+[最长的一帧](https://www.docin.com/p-173577521.html)
+### 场景树      SceneGraph
+### 场景子树    Subgraph
+### 节点        Node
+有一个类型为 osg::StateSet 的成员变量 _stateset
+### 摄像机      Camera
+osg::Camera 有一个类型为 osg::GraphicsOperation 的成员变量 _renderer
+### 渲染器      Renderer
+Renderer 继承自 osg::GraphicsOperation
+有一个类型为 ThreadSafeQueue 的成员变量 _availableQueue，一个类型为 ThreadSafeQueue 的成员变量 _drawQueue
+有一个类型为 osgUtil::SceneView 的成员变量 _sceneView[2]
+ThreadSafeQueue 有一个类型为 `std::list<osgUtil::SceneView*>` 的成员变量 _queue
+osgUtil::SceneView 注释中表示该类已被弃用（开发人员不再使用该类，内部代码仍然需要调用）
+场景的筛选(cull)、绘制(draw)实质上都是由 osgUtil::SceneView 完成
+osgUtil::RenderStage 继承自 osgUtil::RenderBin
+osgUtil::RenderBin 有一个类型为 `std::vector<RenderLeaf*>` 的成员变量 _renderLeafList，类型为 `std::vector<StateGraph*>` 的成员变量 _stateGraphList
+osgUtil::StateGraph 有一个类型为`std::vector<osg::ref_ptr<RenderLeaf>>`的成员变量 _leaves
+### 窗口        Window
+### 视口        Viewport
+### 场景        Scene
+osgViewer::Scene 有一个类型为 osg::Node 的成员变量 _sceneData
+### 视图        View
+osgViewer::View 有一个类型为 osgViewer::Scene 的成员变量 _scene
+osgViewer::View 继承自 osg::View 和 osgGA::GUIActionAdapter
+osg::View 有一个类型为 osg::Camera 的成员变量 _camera;
+### 单视景器    Viewer
+osgViewer::Viewer 继承自 ViewerBase 和 osgViewer::View
+### 多视景器    CompositeViewer
+### 访问器      Visitor
+### 回调        Callback
+### 事件        Event
+osgGA::GUIEventAdapter 表示各种类型的鼠标、键盘、触压笔和窗口事件
+继承 osgGA::GUIEventHandler 并重写 handle 函数获取实时的鼠标、键盘输入，可以自定义用户的交互
+漫游器 Manipulator 交互模式，控制方式。即输入的键盘、鼠标事件如何控制相机
+### 更新        Update
+### 筛选        Cull
+### 绘制        Draw
